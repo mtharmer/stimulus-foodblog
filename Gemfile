@@ -52,3 +52,5 @@ end
 
 
 gem "devise", "~> 4.9"
+
+gem "bootstrap-sass", "~> 3.4"

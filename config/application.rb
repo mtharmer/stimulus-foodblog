@@ -38,5 +38,8 @@ module StimulusFoodblog
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.x.recipe_api.client_id = ENV["RECIPE_CLIENT_ID"]
+    config.x.recipe_api.secret = ENV["RECIPE_SECRET"]
   end
 end

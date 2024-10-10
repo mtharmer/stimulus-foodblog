@@ -4,6 +4,9 @@
       <li class="nav-item">
         <%= link_to 'Home', root_path, class: 'nav-link' %>
       </li>
+      <li class="nav-item">
+        <%= link_to 'Search', search_index_path, class: 'nav-link' %>
+      </li>
     </ul>
     <ul class="d-flex navbar-nav">
       <% if current_user.nil? %>

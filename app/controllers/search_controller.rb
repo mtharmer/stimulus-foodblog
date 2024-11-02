@@ -10,6 +10,6 @@ class SearchController < ApplicationController
     if @criteria
         @results = RecipeApi::Api.new.search_recipes(@criteria)
     end
-    render 'index'
+    render "index"
   end
 end

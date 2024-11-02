@@ -1,9 +1,8 @@
-require 'net/http'
+require "net/http"
 
 module RecipeApi
     class Api
-
-        BASE_URL = 'https://platform.fatsecret.com/rest/'
+        BASE_URL = "https://platform.fatsecret.com/rest/"
 
         def initialize
             @client = Rails.configuration.x.recipe_api.client_id
@@ -13,18 +12,18 @@ module RecipeApi
         end
 
         def refresh_token
-            uri = URI('https://oauth.fatsecret.com/connect/token')
+            uri = URI("https://oauth.fatsecret.com/connect/token")
             req = Net::HTTP::Post.new(uri)
             req.basic_auth @client, @secret
-            req.content_type = 'application/x-www-form-urlencoded'
+            req.content_type = "application/x-www-form-urlencoded"
 
             req.set_form_data({
-                'grant_type' => 'client_credentials',
-                'scope' => 'basic'
+                "grant_type" => "client_credentials",
+                "scope" => "basic"
             })
 
             req_options = {
-                use_ssl: uri.scheme == 'https'
+                use_ssl: uri.scheme == "https"
             }
             res = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
                 http.request(req)
@@ -37,15 +36,17 @@ module RecipeApi
         def get(uri)
             auth = "Bearer #{@@token}"
             req = Net::HTTP::Get.new(uri)
-            req['Authorization'] = auth
-            res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') do |http|
+            req["Authorization"] = auth
+            res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == "https") do |http|
                 http.request(req)
             end
             JSON.parse(res.body)
         end
 
-        def get_recipe
-
+        def get_recipe(id)
+            refresh_token if needs_token?
+            uri = URI(BASE_URL + "recipe/v2?recipe_id=#{id}&format=json")
+            get(uri)
         end
 
         def search_recipes(keyword)

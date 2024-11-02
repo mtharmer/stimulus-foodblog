@@ -3,16 +3,18 @@
     <%= text_field_tag 'criteria', @criteria, class: 'form-control' %>
     <%= submit_tag 'Search', class: 'btn btn-primary' %>
   <% end %>
-  <div class="row">
+  <div class="row p-2">
     <% @results && @results["recipes"]["recipe"].each do |result| %>
-      <div class="col-2">
-        <div class="card" style="width: 18rem;">
-          <% if result["recipe_image"] %>
-            <%= image_tag result["recipe_image"], class: 'card-img-top' %>
-          <% end %>
-          <div class="card-body">
-            <h5 class="card-title"><%= result["recipe_name"] %></h5>
-            <p class="card-text"><%= result["recipe_description"] %></p>
+      <div class="col-6 p-2 border" style="height: 200px;">
+        <div class="row">
+          <div class="col-2">
+            <% if result["recipe_image"] %>
+              <%= image_tag result["recipe_image"], class: 'img-thumbnail' %>
+            <% end %>
+          </div>
+          <div class="col-10">
+            <h5 class="row"><%= result["recipe_name"] %></h5>
+            <p class="row"><%= result["recipe_description"] %></p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
         </div>
